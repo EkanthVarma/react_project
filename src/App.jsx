@@ -4,6 +4,8 @@ import './components/styles.css'
 import Section from './components/Section'
 import Doctorcard from './components/Doctorcard'
 import Addnewdoctor from './components/Addnewdoctor'
+import { Route,Routes } from 'react-router-dom'
+import Doctordetails from './components/Doctordetails'
 // import { useState } from 'react'
 //import { useEffect } from 'react'
 function App() {
@@ -21,17 +23,25 @@ function App() {
       count is {count}
       <button onClick={() => {setCount(count + 1)}}>add</button> */}
       <Navbar />
-      <Section />
+      <Routes>
+        <Route path='/' element={<Section />} />
+        <Route path='/addnewdoctor' element={<Addnewdoctor />} />
+        <Route path='/doctordetails/:id' element={<Doctordetails />} />
+        
+      </Routes>
 
-      <div className='doctorcontainer'>
+      {/* <Section /> */}
+
+      {/* <div className='doctorcontainer'>
         <Doctorcard imglink='./images/deepika.jpg' name='deepika' gender='female' specialization='Cardiologist' />
         <Doctorcard imglink='./images/bharat.jpg' name='bharat' gender='male' specialization='Heart Specialist' />
         <Doctorcard imglink='./images/rohith.jpg' name='rohith' gender='male' specialization='Neurologist' />
         <Doctorcard imglink='./images/babu.jpg' name='babu' gender='male' specialization='Orthopedic' />
+        <Doctorcard imglink='./images/ekanth.jpg' name='ekanth' gender='male' specialization='Heart Specialist' />
+        <Doctorcard imglink='./images/layatri.jpg' name='layatri' gender='female' specialization='Heart Specialist' />
         <Doctorcard imglink='./images/sankar.jpg' name='sankar' gender='male' specialization='Heart Specialist' />
-        <Doctorcard imglink='./images/deepika.jpg' name='ekanth' gender='male' specialization='Heart Specialist' />
-      </div>
-      <Addnewdoctor />
+      </div> */}
+      {/* <Addnewdoctor /> */}
     </div>
   )
 }

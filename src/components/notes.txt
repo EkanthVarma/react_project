@@ -1,0 +1,107 @@
+07/09/2026
+===========
+htm-routing-anchor tag
+
+single html file- react router dom 
+--It is libary in react used  for rounting
+-static rounting
+-dynamic rounting
+
+steps:
+1)npm install react-router-dom
+2)configure react router -- main.jsx
+import {BrowserRouter} from 'react-router-dom'
+
+<BrowserRouter>
+   <app/>  
+</BrowserRouter>
+
+3)rules-routes --App.jsx
+<Routes>
+  <Route path='/' element={</home>}/>
+  <Route path='/about' element={</About>}/>
+  <Route path='/addnewdoctor' element={</addnewdoctor>}/>
+</Routes>
+
+4)Components -navbar
+useNavigate()--IT is used for programatical routing
+
+import {useNavigate} from 'react-router-dom'
+
+let navigate=useNavigate()
+<button onclick={()=>navigate('/')}>home</button>
+<button onclick={()=>navigate('/about')}>About</button>
+
+
+Dynamic Routing
+================
+5) <Route path='/doctordetails/:id' element={</doctordetails>}/>  --App.jsx
+
+6)doctor card ---doctor cards
+import (useNavigate} from 'react-router-dom
+let navigate=useNavigate()
+
+<button onClick={()=>naviagate(`/doctordetails/${id}`)}></button>
+
+7)useParams() -- doctor details
+--It is used to get the data from the url
+
+import {useParams} from 'react-router-dom'
+let {id}=useParams()
+
+
+8/09/2027
+===========
+1) api calling
+1. using fetch -- data.json()
+2. using axios
+
+2) import axios  from 'axios'
+
+import {useEffect,useState} from 'react'
+
+let [doctors,setDoctors = usestate([])
+
+async function getapidata(){
+	let response = await axios.get(api link)
+	console.log(response) // response-{}
+	console.log(response.data) // actual data
+	setDoctors(response.data)
+	
+}
+
+useEffect(()=>{
+	getapidata()
+},[])
+
+#new project
+1) new folder
+   npm create vite@latest ecommerce
+   framework - react
+   variant - js
+
+2) ctrl c
+   cd ecommerce
+   npm install axios
+   npm run dev
+
+3) open App.jsx --- clear -- enter rfce
+   write a logic for api calling - https://fakestoreapi.com/products
+
+9/9/26
+========
+http methods
+1)get
+
+await axios.get('apilink')
+
+2)post 
+
+await axios.post('apilink',newdata)
+
+3)put
+
+await axios.put('apilink','/id',newdata)
+
+4)delete
+await axios.delete('apilink','/id' doctors')

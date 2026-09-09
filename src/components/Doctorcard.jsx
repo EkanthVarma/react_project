@@ -1,15 +1,17 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-function Doctorcard({name, gender, specialization}) {
+function Doctorcard({name, gender, specialization,id, deletedata,updatedata}) {
+  let navigate = useNavigate()
   return (
     <div className='card'>
-        <div><img src="https://static.vecteezy.com/system/resources/thumbnails/055/621/001/small/closeup-portrait-of-a-young-woman-with-freckles-and-snow-on-her-face-surrounded-by-pine-branches-photo.jpg" alt="Doctor" />
-        </div>
+        <div><img src="https://www.lospaziobianco.it/wp-content/uploads/2025/11/sadiesink.jpg" alt="Doctor" /></div>
         <h1>{name}</h1>
         <p>{gender}</p>
         <p>{specialization}</p>
-        <button>view details</button>
-
+        <button onClick={() => navigate(`/doctordetails/${id}`)}>view details</button>
+        <button onClick={() => deletedata(id)}>Delete</button>
+        <button onClick={() => updatedata(id)}>Update</button>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import Home from './Home';
+import axios from 'axios'
 
 function Addnewdoctor() {
     let [name, setName] = useState('');
@@ -9,17 +10,37 @@ function Addnewdoctor() {
     let [specialization, setSpecialization] = useState('');
     let [salary, setSalary] = useState('');
     let [newdoctor, setNewdoctor] = useState(null);
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         let formdetails = {id:Date.now(), name, age, gender, specialization, salary};
+        await axios.post('https://doctorapibackend.onrender.com/doctors',formdetails)
+        alert('data posted')
         setNewdoctor(formdetails);
+    } 
+
+    async function deletedata(id){
+      await axios.delete(`https://doctorapibackend.onrender.com/doctors/${id}`)
+      alert('deleted')
+      setNewdoctor(id)
+    }
+
+    async function updatedata(id){
+      let updated={
+        name:'john',
+        specialization:'Heart',
+        age:30,
+        gender:'Male',
+        salary:5000000,
+      }
+      await axios.put(`https://doctorapibackend.onrender.com/doctors/${id}`,updated)
+      alert('data updated')
+      setNewdoctor(updated)
     }
   return (
     <div className="form-container">
       <h1>Add New Doctor</h1>
       <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Enter Doctor Name"/>
+        <input type="text" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Enter Doctor Name"/>
         <input type="number" value={age} onChange={(e)=>setAge(e.target.value)} placeholder="Enter Age"/>
         <select name="" id="" value={gender} onChange={(e)=>setGender(e.target.value)}>
           <option value="">Select Gender</option>
@@ -31,7 +52,7 @@ function Addnewdoctor() {
         <input type="number" value={salary} onChange={(e)=>setSalary(e.target.value)} placeholder="Enter Salary" />
         <button type="submit">Add Doctor</button>
       </form>
-      <Home newdoctor={newdoctor} />
+      <Home deletedata={deletedata} updatedata={updatedata} newdoctor={newdoctor} />
     </div>
   );
 }
