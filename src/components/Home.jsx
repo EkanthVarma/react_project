@@ -1,11 +1,26 @@
 import React from 'react'
-import {useEffect,useState} from 'react'
+import {useEffect,useState,useMemo} from 'react'
 import Doctorcard from './Doctorcard';
 import axios from 'axios'
-function Home({newdoctor,deletedata,updatedata}) {
+import { useContext } from 'react';
+import { DoctorContext } from './DoctorProvider';
+function Home() {
+  let {newdoctor} = useContext(DoctorContext)
   let [doctors,setDoctors]=useState([])
   let [search,setSearch]=useState('')
   let [specialization,setSpecialization]=useState('')
+
+  async function getapidata() {
+    try{
+      let response = await axios.get(
+        "https://doctorapibackend.onrender.com/doctors",);
+        console.log(response);
+        console.log(response.data);
+        setDoctors(response.data);
+    } catch(err){
+      console.log(err);
+    } 
+  }
 
   // function getapidata(){
   //   let data = [
@@ -49,19 +64,27 @@ function Home({newdoctor,deletedata,updatedata}) {
   //   }
   // },[newdoctor])
 
-  let filtereddoctors=doctors.filter((val)=>{
+  let filtereddoctors=useMemo(
+    ()=>{
+      return doctors.filter((val)=>{
     return(val.name.toLowerCase().includes(search.toLowerCase()) && 
-    (specialization=="" || val.specialization==specialization)
-  )
-    // return(search.toLowerCase().includes(val.name.toLowerCase()))
+    (specialization=="" || val.specialization==specialization))
   })
+},[search,specialization,doctors])
 
-  async function getapidata(){
-    let response=await axios.get("https://doctorapibackend.onrender.com/doctors")
-    console.log(response)
-    console.log(response.data)//actual data
-    setDoctors(response.data)
-}
+  // let filtereddoctors=doctors.filter((val)=>{
+  //   return(val.name.toLowerCase().includes(search.toLowerCase()) && 
+  //   (specialization=="" || val.specialization==specialization)
+  // )
+  //   // return(search.toLowerCase().includes(val.name.toLowerCase()))
+  // })
+
+//   async function getapidata(){
+//     let response=await axios.get("https://doctorapibackend.onrender.com/doctors")
+//     console.log(response)
+//     console.log(response.data)//actual data
+//     setDoctors(response.data)
+// }
   useEffect(()=>{
       getapidata()
   },[])
@@ -77,8 +100,8 @@ function Home({newdoctor,deletedata,updatedata}) {
         <div className='doctorcontainer'>
           {filtereddoctors.map((doctor)=>{
             return <Doctorcard 
-            deletedata={deletedata}
-            updatedata={updatedata}
+            // deletedata={deletedata}
+            // updatedata={updatedata}
             name={doctor.name}
             gender={doctor.gender}
             specialization={doctor.specialization}

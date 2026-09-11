@@ -105,3 +105,33 @@ await axios.put('apilink','/id',newdata)
 
 4)delete
 await axios.delete('apilink','/id' doctors')
+
+how do you optimize react
+1)by using useMemo()
+it is a hook that is used to optimize react by memorizing the expensive
+calculation
+it runs only when the dependencies change
+
+import {useMemo} from 'react'
+useMemo(()=>{
+   return 'logic'
+},[dep1,dep2,dep3])
+
+11/09/26
+========
+props - it is used to pass the information or data from parent to child
+
+props drilling
+ex: grandparents ----> child ----> grandchild
+a comp    b comp    c comp
+information   passing    use
+
+to overcome props drilling
+1) useContext - it  is a hook that is used to manage the state globallly
+ex: file --- logic
+    comp a
+    comp b
+    comp c
+    
+2) redux
+3) redux toolkit

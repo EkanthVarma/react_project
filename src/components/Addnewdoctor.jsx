@@ -2,40 +2,55 @@ import React from 'react';
 import { useState } from 'react';
 import Home from './Home';
 import axios from 'axios'
+import { useContext } from 'react';
+import { DoctorContext } from './DoctorProvider';
 
 function Addnewdoctor() {
+    let {setNewdoctor} = useContext(DoctorContext);
     let [name, setName] = useState('');
     let [age, setAge] = useState('');
     let [gender, setGender] = useState('');
     let [specialization, setSpecialization] = useState('');
     let [salary, setSalary] = useState('');
-    let [newdoctor, setNewdoctor] = useState(null);
+    //let [newdoctor, setNewdoctor] = useState(null);
     async function handleSubmit(e) {
         e.preventDefault();
-        let formdetails = {id:Date.now(), name, age, gender, specialization, salary};
+        try{
+          let formdetails = {id:Date.now(), name, age, gender, specialization, salary};
         await axios.post('https://doctorapibackend.onrender.com/doctors',formdetails)
         alert('data posted')
         setNewdoctor(formdetails);
+        }catch(err){
+          console.log(err)
+        }
     } 
 
-    async function deletedata(id){
-      await axios.delete(`https://doctorapibackend.onrender.com/doctors/${id}`)
-      alert('deleted')
-      setNewdoctor(id)
-    }
+    // async function deletedata(id){
+    //   try{
+    //     await axios.delete(`https://doctorapibackend.onrender.com/doctors/${id}`)
+    //   alert('deleted')
+    //   setNewdoctor(id)
+    //   }catch(err){
+    //     console.log(err)
+    //   }
+    // }
 
-    async function updatedata(id){
-      let updated={
-        name:'john',
-        specialization:'Heart',
-        age:30,
-        gender:'Male',
-        salary:5000000,
-      }
-      await axios.put(`https://doctorapibackend.onrender.com/doctors/${id}`,updated)
-      alert('data updated')
-      setNewdoctor(updated)
-    }
+    // async function updatedata(id){
+    //   let updated={
+    //     name:prompt('Enter new name'),
+    //     specialization:prompt('Enter new specialization'),
+    //     age:prompt('Enter new age'),
+    //     gender:prompt('Enter new gender'),
+    //     salary:prompt('Enter new salary'),
+    //   }
+    //   try{
+    //     await axios.put(`https://doctorapibackend.onrender.com/doctors/${id}`,updated)
+    //   alert('data updated')
+    //   setNewdoctor(updated)
+    //   }catch(err){
+    //     console.log(err)
+    //   }
+    // }
   return (
     <div className="form-container">
       <h1>Add New Doctor</h1>
@@ -52,7 +67,7 @@ function Addnewdoctor() {
         <input type="number" value={salary} onChange={(e)=>setSalary(e.target.value)} placeholder="Enter Salary" />
         <button type="submit">Add Doctor</button>
       </form>
-      <Home deletedata={deletedata} updatedata={updatedata} newdoctor={newdoctor} />
+      <Home />
     </div>
   );
 }

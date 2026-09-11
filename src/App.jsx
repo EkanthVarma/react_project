@@ -6,9 +6,15 @@ import Doctorcard from './components/Doctorcard'
 import Addnewdoctor from './components/Addnewdoctor'
 import { Route,Routes } from 'react-router-dom'
 import Doctordetails from './components/Doctordetails'
+import Protectedroute from './components/Protectedroute'
+import useCounter from './components/useCounter'
 // import { useState } from 'react'
 //import { useEffect } from 'react'
+import { useState } from 'react'
+import DoctorProvider from './components/DoctorProvider'
 function App() {
+  let [islogin,setIslogin] = useState(false)
+  let {count,inc,dnc} = useCounter()
   //let [count, setCount] = useState(0)
   //let [data, newData] = useState('')
   //useEffect(() => {
@@ -16,16 +22,20 @@ function App() {
   //},[data])
   return (
     <div>
+      {count}
+      <button onClick={inc}>inc</button>
+      <button onClick={dnc}>dnc</button>
       {/* {data}
       <button onClick={() => {
         let a = prompt('enter a name')
         newData(a)}}>newdata</button>
       count is {count}
       <button onClick={() => {setCount(count + 1)}}>add</button> */}
+      <button onClick={()=>setIslogin(true)}>Login here</button>
       <Navbar />
       <Routes>
         <Route path='/' element={<Section />} />
-        <Route path='/addnewdoctor' element={<Addnewdoctor />} />
+        <Route path='/addnewdoctor' element={<Protectedroute islogin={islogin}><DoctorProvider><Addnewdoctor></Addnewdoctor></DoctorProvider></Protectedroute>} />
         <Route path='/doctordetails/:id' element={<Doctordetails />} />
         
       </Routes>

@@ -7,9 +7,13 @@ function Doctordetails() {
   let {id} = useParams()
   let [doctor, setDoctor] = React.useState()
   async function getapidata(){
-    let response=await axios.get("https://doctorapibackend.onrender.com/doctors")
-    let finaldata = response.data.find((val) => id == val.id)
-    setDoctor(finaldata)
+    try{
+      let response=await axios.get("https://doctorapibackend.onrender.com/doctors")
+      let finaldata = response.data.find((val) => id == val.id)
+      setDoctor(finaldata)
+    } catch(err){
+      console.log(err);
+    } 
   }
   // function getapidata(){
   //   let data = [
